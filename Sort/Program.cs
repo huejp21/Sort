@@ -1,8 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
+    {
+        //SampleMergeSort();
+        SampleBinarySearch();
+    }
+
+    #region Sort
+
+    /// <summary>
+    /// Sample Merge Sort
+    /// </summary>
+    private static void SampleMergeSort()
     {
         PrintArray(MergeSort(new int[] { 2, 1, 7, 4, 2 }));
         Console.ReadLine();
@@ -92,26 +104,80 @@ class Program
         }
         return result;
     }
+    #endregion
 
+    #region Binary Search
+    // TODO: why all of binary search are not correct?
+    /// <summary>
+    /// Sample Binary Search
+    /// </summary>
+    private static void SampleBinarySearch()
+    {
+        var input = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+        //var indices = new List<int>();
+        //for (var i = 0; i < input.Length; i++)
+        //{
+        //    var index = BinarySearch(input, input[i]);
+        //    indices.Add(index);
+        //}
+        //PrintArray(indices);
+        //Console.ReadLine();
+        var index = BinarySearch(input, 4);
+        Console.WriteLine(index);
+        Console.ReadLine();
+    }
+    /// <summary>
+    /// Binary Search
+    /// </summary>
+    /// <param name="arr">input array</param>
+    /// <param name="targetValue">target value</param>
+    /// <returns>target value index, if couldn't find value then return -1 </returns>
+    private static int BinarySearch(int[] arr, int targetValue)
+    {
+        var rightIndex = arr.Length -1;
+        var leftIndex = 0;
+        while (leftIndex <= rightIndex)
+        {
+            var midIndex = (int)Math.Floor((leftIndex + rightIndex) / 2.0);
+            var midValue = arr[midIndex];
+            if (midValue < targetValue)
+            {
+                leftIndex = midValue + 1;
+            }
+            else if (midValue > targetValue)
+            {
+                rightIndex = midIndex -1;
+            }
+            else
+            {
+                return midIndex;
+            }
+        }
+        return -1;
+    }
+    #endregion
+
+    #region Common Test Util
     /// <summary>
     /// Print Array to Console(Helper)
     /// </summary>
     /// <param name="arr">Input Array</param>
-    private static void PrintArray(int[] arr)
+    private static void PrintArray(IList<int> arr)
     {
-        if (arr == null || arr.Length < 1)
+        if (arr == null || arr.Count < 1)
         {
             Console.WriteLine("Empty Array");
         }
         else
         {
             var resultString = "[";
-            for (var i = 0; i < arr.Length - 1; i++)
+            for (var i = 0; i < arr.Count - 1; i++)
             {
                 resultString += $"{arr[i]},";
             }
-            resultString += $"{arr[arr.Length - 1]})";
+            resultString += $"{arr[arr.Count - 1]})";
             Console.WriteLine(resultString);
         }
     }
+    #endregion
 }
